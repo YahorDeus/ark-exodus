@@ -1,0 +1,1784 @@
+{
+  "meta": {
+    "title": "ARK EXODUS",
+    "version": "0.2.0",
+    "mode": "turn-based",
+    "targetPlaytimeMinutes": [
+      35,
+      45
+    ]
+  },
+  "initial": {
+    "hull": 100,
+    "maxHull": 100,
+    "oxygen": 50,
+    "maxOxygen": 130,
+    "fuel": 24,
+    "maxFuel": 160,
+    "alloys": 32,
+    "food": 44,
+    "maxFood": 130,
+    "components": 1,
+    "shieldStock": 4,
+    "maxShieldStock": 60,
+    "weaponStock": 4,
+    "maxWeaponStock": 55,
+    "crewHealthy": 8,
+    "crewInjured": 0,
+    "cryoPop": 1000,
+    "morale": 76
+  },
+  "turnRules": {
+    "o2PerCrew": 1.65,
+    "foodPerCrew": 1.45,
+    "cryoPowerCostBase": 3,
+    "cryoLossIfUnpowered": 35,
+    "fuelPerTurnBase": 2,
+    "starvationMoraleLoss": 11,
+    "hypoxiaCrewLoss": 1,
+    "blackoutPenalty": 0.4
+  },
+  "reactorTiers": [
+    {
+      "tier": 1,
+      "id": "fusion",
+      "name": "Термоядерное ядро",
+      "short": "Термояд",
+      "color": "#f59e0b",
+      "basePower": 10,
+      "powerPerWorker": 3,
+      "fuelPerTurn": 2,
+      "desc": "Стартовый реактор Ковчега. Захвати карликовую звезду, чтобы резко поднять мощность сети!"
+    },
+    {
+      "tier": 2,
+      "id": "red_dwarf",
+      "name": "Красный карлик (в камере)",
+      "short": "Карлик",
+      "color": "#f97316",
+      "basePower": 16,
+      "powerPerWorker": 4,
+      "fuelPerTurn": 2,
+      "desc": "Захваченная мини-звезда. +8 МВт мощности, стабильный выход энергии для глубоких систем."
+    },
+    {
+      "tier": 3,
+      "id": "neutron_core",
+      "name": "Нейтронное ядро",
+      "short": "Пульсар",
+      "color": "#38bdf8",
+      "basePower": 23,
+      "powerPerWorker": 5,
+      "fuelPerTurn": 1,
+      "desc": "Сверхплотный пульсар внутри реактора. Огромный запас МВт и вдвое меньше расход Гелия-3!"
+    },
+    {
+      "tier": 4,
+      "id": "micro_quasar",
+      "name": "Микро-квазар (Сингулярность)",
+      "short": "Квазар",
+      "color": "#c084fc",
+      "basePower": 32,
+      "powerPerWorker": 6,
+      "fuelPerTurn": 1,
+      "desc": "Вершина звёздной энергетики: питает все синтезаторы на максимуме и открывает путь к Эдему."
+    }
+  ],
+  "compartments": [
+    {
+      "id": "reactor",
+      "name": "Звёздный реактор",
+      "short": "РЕАКТОР",
+      "desc": "Генерирует всю Энергию (МВт) станции. Модернизация отсека ТОЛЬКО добавляет слоты инженеров — само ядро усиливается только захватом Звёзд!",
+      "x": 0.14,
+      "y": 0.5,
+      "w": 0.16,
+      "h": 0.3,
+      "color": "#f59e0b",
+      "maxWorkers": 2,
+      "powerPerWorker": 0,
+      "basePowerUse": 0,
+      "levels": [
+        {
+          "level": 1,
+          "maxWorkers": 2,
+          "alloyCost": 0,
+          "compCost": 0,
+          "note": "До 2 инженеров в реакторе. Усиление ядра — только через Захват Звёзд."
+        },
+        {
+          "level": 2,
+          "maxWorkers": 3,
+          "alloyCost": 50,
+          "compCost": 2,
+          "note": "+1 слот инженера (до 3 чел. в реакторе)."
+        },
+        {
+          "level": 3,
+          "maxWorkers": 4,
+          "alloyCost": 105,
+          "compCost": 4,
+          "note": "+1 слот инженера (до 4 чел. в реакторе)."
+        }
+      ]
+    },
+    {
+      "id": "life_support",
+      "name": "Синтезатор O₂",
+      "short": "СИНТЕЗ O₂",
+      "desc": "Преобразует энергию в чистый кислород. Модернизация повышает КПД и добавляет рабочие слоты.",
+      "x": 0.33,
+      "y": 0.33,
+      "w": 0.16,
+      "h": 0.25,
+      "color": "#38bdf8",
+      "maxWorkers": 2,
+      "powerPerWorker": 1,
+      "basePowerUse": 0,
+      "levels": [
+        {
+          "level": 1,
+          "maxWorkers": 2,
+          "o2PerWorker": 6,
+          "powerPerWorker": 1,
+          "alloyCost": 0,
+          "compCost": 0,
+          "note": "До 2 чел. · 1 чел. = −1 МВт → +6 O₂/ход."
+        },
+        {
+          "level": 2,
+          "maxWorkers": 3,
+          "o2PerWorker": 9,
+          "powerPerWorker": 1,
+          "alloyCost": 45,
+          "compCost": 1,
+          "note": "До 3 чел. · 1 чел. = −1 МВт → +9 O₂/ход."
+        },
+        {
+          "level": 3,
+          "maxWorkers": 4,
+          "o2PerWorker": 12,
+          "powerPerWorker": 1,
+          "alloyCost": 95,
+          "compCost": 4,
+          "note": "До 4 чел. = −1 МВт → +12 O₂/ход."
+        }
+      ]
+    },
+    {
+      "id": "hydroponics",
+      "name": "Огороды (Гидропоника)",
+      "short": "ОГОРОДЫ",
+      "desc": "Выращивает еду под искусственным солнцем. Модернизация расширяет грядки (+слоты людей) и урожайность.",
+      "x": 0.33,
+      "y": 0.65,
+      "w": 0.16,
+      "h": 0.25,
+      "color": "#4ade80",
+      "maxWorkers": 2,
+      "powerPerWorker": 1,
+      "basePowerUse": 0,
+      "levels": [
+        {
+          "level": 1,
+          "maxWorkers": 2,
+          "foodPerWorker": 5,
+          "moraleBonus": 0,
+          "powerPerWorker": 1,
+          "alloyCost": 0,
+          "compCost": 0,
+          "note": "До 2 чел. · 1 чел. = −1 МВт → +5 Еды/ход."
+        },
+        {
+          "level": 2,
+          "maxWorkers": 3,
+          "foodPerWorker": 8,
+          "moraleBonus": 1,
+          "powerPerWorker": 1,
+          "alloyCost": 45,
+          "compCost": 1,
+          "note": "До 3 чел. · 1 чел. = −1 МВт → +8 Еды/ход, +1 Морали."
+        },
+        {
+          "level": 3,
+          "maxWorkers": 4,
+          "foodPerWorker": 11,
+          "moraleBonus": 2,
+          "powerPerWorker": 1,
+          "alloyCost": 90,
+          "compCost": 3,
+          "note": "До 4 чел. · 1 чел. = −1 МВт → +11 Еды/ход, +2 Морали."
+        }
+      ]
+    },
+    {
+      "id": "synthesizer",
+      "name": "Синтезатор сплавов",
+      "short": "СПЛАВЫ",
+      "desc": "Молекулярный фабрикатор: превращает энергию в Сплавы и редкие Компоненты. Апгрейд расширяет смены.",
+      "x": 0.52,
+      "y": 0.33,
+      "w": 0.16,
+      "h": 0.25,
+      "color": "#fb923c",
+      "maxWorkers": 2,
+      "powerPerWorker": 2,
+      "basePowerUse": 0,
+      "levels": [
+        {
+          "level": 1,
+          "maxWorkers": 2,
+          "alloysPerWorker": 5,
+          "compChance": 0.22,
+          "powerPerWorker": 2,
+          "alloyCost": 0,
+          "compCost": 0,
+          "note": "До 2 чел. · 1 чел. = −2 МВт → +5 Спл/ход."
+        },
+        {
+          "level": 2,
+          "maxWorkers": 3,
+          "alloysPerWorker": 8,
+          "compChance": 0.38,
+          "powerPerWorker": 2,
+          "alloyCost": 55,
+          "compCost": 2,
+          "note": "До 3 чел. · 1 чел. = −2 МВт → +8 Спл/ход + Компоненты."
+        },
+        {
+          "level": 3,
+          "maxWorkers": 4,
+          "alloysPerWorker": 11,
+          "compChance": 0.55,
+          "powerPerWorker": 2,
+          "alloyCost": 110,
+          "compCost": 4,
+          "note": "До 4 чел. · 1 чел. = −2 МВт → +11 Спл/ход + частые Комп."
+        }
+      ]
+    },
+    {
+      "id": "defense_bay",
+      "name": "Щиты и Орудия",
+      "short": "ОБОРОНА",
+      "desc": "Накапливает заряд Щита и боезапас Оружия для боя с десантом/перехватчиком, гасит атаки комет и чинит обшивку.",
+      "x": 0.52,
+      "y": 0.65,
+      "w": 0.16,
+      "h": 0.25,
+      "color": "#60a5fa",
+      "maxWorkers": 2,
+      "powerPerWorker": 2,
+      "basePowerUse": 0,
+      "levels": [
+        {
+          "level": 1,
+          "maxWorkers": 2,
+          "repairPerWorker": 5,
+          "shieldGenPerWorker": 3,
+          "weaponGenPerWorker": 3,
+          "shieldBlockPerWorker": 3,
+          "alloyPerRepair": 3,
+          "powerPerWorker": 2,
+          "alloyCost": 0,
+          "compCost": 0,
+          "note": "До 2 чел. · −2 МВт → +3 Щита, +3 Оружия (стреляют по кометам!), +5% рем./ход."
+        },
+        {
+          "level": 2,
+          "maxWorkers": 3,
+          "repairPerWorker": 8,
+          "shieldGenPerWorker": 4,
+          "weaponGenPerWorker": 4,
+          "shieldBlockPerWorker": 5,
+          "alloyPerRepair": 3,
+          "powerPerWorker": 2,
+          "alloyCost": 55,
+          "compCost": 2,
+          "note": "До 3 чел. · −2 МВт → +4 Щита, +4 Оружия, +8% рем./ход."
+        },
+        {
+          "level": 3,
+          "maxWorkers": 4,
+          "repairPerWorker": 11,
+          "shieldGenPerWorker": 6,
+          "weaponGenPerWorker": 5,
+          "shieldBlockPerWorker": 8,
+          "alloyPerRepair": 2,
+          "powerPerWorker": 2,
+          "alloyCost": 115,
+          "compCost": 4,
+          "note": "До 4 чел. · −2 МВт → +6 Щита, +5 Оружия, +11% рем., +25 макс. обш."
+        }
+      ]
+    },
+    {
+      "id": "medbay",
+      "name": "Медблок",
+      "short": "МЕДБЛОК",
+      "desc": "Лечит раненых членов экипажа и восстанавливает Мораль команды.",
+      "x": 0.71,
+      "y": 0.33,
+      "w": 0.16,
+      "h": 0.25,
+      "color": "#f472b6",
+      "maxWorkers": 1,
+      "powerPerWorker": 1,
+      "basePowerUse": 0,
+      "levels": [
+        {
+          "level": 1,
+          "maxWorkers": 1,
+          "healTurns": 2,
+          "moralePerWorker": 2,
+          "powerPerWorker": 1,
+          "alloyCost": 0,
+          "compCost": 0,
+          "note": "До 1 чел. · −1 МВт → +2 Морали/ход, лечение за 2 хода."
+        },
+        {
+          "level": 2,
+          "maxWorkers": 2,
+          "healTurns": 1,
+          "moralePerWorker": 4,
+          "powerPerWorker": 1,
+          "alloyCost": 45,
+          "compCost": 2,
+          "note": "До 2 чел. · −1 МВт → +4 Морали/ход, лечение за 1 ход."
+        },
+        {
+          "level": 3,
+          "maxWorkers": 3,
+          "healTurns": 1,
+          "moralePerWorker": 6,
+          "powerPerWorker": 1,
+          "alloyCost": 85,
+          "compCost": 4,
+          "note": "До 3 чел. · −1 МВт → +6 Морали/ход, мгновенная реанимация."
+        }
+      ]
+    },
+    {
+      "id": "shuttle_bay",
+      "name": "Шлюз шаттлов",
+      "short": "ШЛЮЗ",
+      "desc": "Отправляет пошаговые экспедиции (3–5 ходов). Апгрейд добавляет 2-й шаттл и дополнительные слоты техников.",
+      "x": 0.71,
+      "y": 0.65,
+      "w": 0.16,
+      "h": 0.25,
+      "color": "#a78bfa",
+      "maxWorkers": 1,
+      "powerPerWorker": 1,
+      "basePowerUse": 1,
+      "levels": [
+        {
+          "level": 1,
+          "maxWorkers": 1,
+          "maxShuttles": 1,
+          "yieldMult": 1.0,
+          "riskMult": 1.0,
+          "powerPerWorker": 1,
+          "alloyCost": 0,
+          "compCost": 0,
+          "note": "До 1 техника, 1 шаттл (база 1 МВт)."
+        },
+        {
+          "level": 2,
+          "maxWorkers": 2,
+          "maxShuttles": 2,
+          "yieldMult": 1.25,
+          "riskMult": 0.85,
+          "powerPerWorker": 1,
+          "alloyCost": 65,
+          "compCost": 2,
+          "note": "До 2 техников (−1 ход вылазки при 2 чел.) и 2 шаттла!"
+        },
+        {
+          "level": 3,
+          "maxWorkers": 3,
+          "maxShuttles": 2,
+          "yieldMult": 1.55,
+          "riskMult": 0.65,
+          "powerPerWorker": 1,
+          "alloyCost": 130,
+          "compCost": 5,
+          "note": "До 3 техников, +55% добычи, −35% риска ЧП."
+        }
+      ]
+    }
+  ],
+  "galaxyMap": [
+    {
+      "id": "sys_0",
+      "layer": 0,
+      "col": 1,
+      "name": "Окраина Солнца",
+      "scanSummary": "Стартовая точка. Спокойный сектор, базовые ресурсы.",
+      "scanTag": "Старт · Баланс",
+      "threatLevel": 1,
+      "jumpFuelCost": 27,
+      "stormTurn": 15,
+      "ambientHullDmg": 0,
+      "powerPenalty": 0,
+      "themeColor": "#38bdf8",
+      "next": [
+        "sys_1a",
+        "sys_1b",
+        "sys_1c"
+      ],
+      "nodes": [
+        {
+          "type": "nebula",
+          "name": "Водородное облако",
+          "turns": 4,
+          "fuel": 24,
+          "oxygen": 18,
+          "alloys": 0,
+          "comp": 0,
+          "risk": 0.22
+        },
+        {
+          "type": "asteroid",
+          "name": "Железный астероид",
+          "turns": 4,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 36,
+          "comp": 1,
+          "risk": 0.25
+        },
+        {
+          "type": "comet",
+          "name": "Комета «Галлей-2»",
+          "turns": 5,
+          "fuel": 10,
+          "oxygen": 32,
+          "alloys": 12,
+          "comp": 1,
+          "risk": 0.35,
+          "expiresTurn": 12
+        },
+        {
+          "type": "wreck",
+          "name": "Маяк эвакуации №4",
+          "turns": 5,
+          "fuel": 14,
+          "oxygen": 10,
+          "alloys": 22,
+          "comp": 2,
+          "risk": 0.4
+        },
+        {
+          "type": "capsule",
+          "name": "Спасательная капсула Эхо-1",
+          "turns": 3,
+          "crew": 2,
+          "fuel": 6,
+          "oxygen": 10,
+          "alloys": 10,
+          "comp": 0,
+          "risk": 0.24
+        }
+      ],
+      "jumpAlloyCost": 10
+    },
+    {
+      "id": "sys_1a",
+      "layer": 1,
+      "col": 0,
+      "name": "Газовый Рукав",
+      "scanSummary": "Сенсоры: плотные туманности с Гелием-3 и O₂. Мало руды, низкая угроза.",
+      "scanTag": "Много He-3 и O₂",
+      "threatLevel": 1,
+      "jumpFuelCost": 31,
+      "stormTurn": 14,
+      "ambientHullDmg": 1,
+      "powerPenalty": 0,
+      "themeColor": "#a855f7",
+      "next": [
+        "sys_2a",
+        "sys_2b"
+      ],
+      "nodes": [
+        {
+          "type": "nebula",
+          "name": "Сердце туманности",
+          "turns": 5,
+          "fuel": 38,
+          "oxygen": 26,
+          "alloys": 0,
+          "comp": 1,
+          "risk": 0.32
+        },
+        {
+          "type": "nebula",
+          "name": "Кислородный карман",
+          "turns": 4,
+          "fuel": 18,
+          "oxygen": 38,
+          "alloys": 0,
+          "comp": 0,
+          "risk": 0.26
+        },
+        {
+          "type": "comet",
+          "name": "Синяя комета K-9",
+          "turns": 5,
+          "fuel": 16,
+          "oxygen": 30,
+          "alloys": 14,
+          "comp": 2,
+          "risk": 0.4,
+          "expiresTurn": 11
+        },
+        {
+          "type": "capsule",
+          "name": "Шлюпка с «Вектора»",
+          "turns": 4,
+          "crew": 2,
+          "fuel": 10,
+          "oxygen": 12,
+          "alloys": 8,
+          "comp": 1,
+          "risk": 0.3
+        }
+      ],
+      "jumpAlloyCost": 14
+    },
+    {
+      "id": "sys_1b",
+      "layer": 1,
+      "col": 1,
+      "name": "Пояс Рудовозов",
+      "scanSummary": "Сенсоры: богатые астероиды и обломки. Метеоритный фон (−2 обш/ход).",
+      "scanTag": "Много Сплавов и Комп.",
+      "threatLevel": 2,
+      "jumpFuelCost": 31,
+      "stormTurn": 14,
+      "ambientHullDmg": 2,
+      "powerPenalty": 0,
+      "themeColor": "#f59e0b",
+      "next": [
+        "sys_2a",
+        "sys_2b",
+        "sys_2c"
+      ],
+      "nodes": [
+        {
+          "type": "asteroid",
+          "name": "Титановая жила",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 52,
+          "comp": 1,
+          "risk": 0.34
+        },
+        {
+          "type": "wreck",
+          "name": "Баржа «Атлант»",
+          "turns": 5,
+          "fuel": 20,
+          "oxygen": 12,
+          "alloys": 38,
+          "comp": 3,
+          "risk": 0.48
+        },
+        {
+          "type": "nebula",
+          "name": "Гелиевый след",
+          "turns": 4,
+          "fuel": 28,
+          "oxygen": 14,
+          "alloys": 0,
+          "comp": 0,
+          "risk": 0.28
+        },
+        {
+          "type": "capsule",
+          "name": "Аварийный бот горняков",
+          "turns": 4,
+          "crew": 2,
+          "fuel": 8,
+          "oxygen": 8,
+          "alloys": 18,
+          "comp": 1,
+          "risk": 0.34
+        }
+      ],
+      "jumpAlloyCost": 14
+    },
+    {
+      "id": "sys_1c",
+      "layer": 1,
+      "col": 2,
+      "name": "Дрейф Комет",
+      "scanSummary": "Сенсоры: скопление комет (лёд + компоненты). Быстро уходят с орбиты!",
+      "scanTag": "Кометы · Редкие Комп.",
+      "threatLevel": 2,
+      "jumpFuelCost": 31,
+      "stormTurn": 14,
+      "ambientHullDmg": 1,
+      "powerPenalty": 1,
+      "themeColor": "#06b6d4",
+      "next": [
+        "sys_2b",
+        "sys_2c"
+      ],
+      "nodes": [
+        {
+          "type": "comet",
+          "name": "Комета «Борей»",
+          "turns": 4,
+          "fuel": 16,
+          "oxygen": 42,
+          "alloys": 16,
+          "comp": 2,
+          "risk": 0.38,
+          "expiresTurn": 10
+        },
+        {
+          "type": "comet",
+          "name": "Ледяной осколок",
+          "turns": 5,
+          "fuel": 20,
+          "oxygen": 36,
+          "alloys": 18,
+          "comp": 2,
+          "risk": 0.42,
+          "expiresTurn": 12
+        },
+        {
+          "type": "nebula",
+          "name": "Холодный шлейф",
+          "turns": 4,
+          "fuel": 26,
+          "oxygen": 18,
+          "alloys": 0,
+          "comp": 1,
+          "risk": 0.3
+        },
+        {
+          "type": "capsule",
+          "name": "Крио-шлюпка ледокола",
+          "turns": 3,
+          "crew": 2,
+          "fuel": 8,
+          "oxygen": 16,
+          "alloys": 8,
+          "comp": 1,
+          "risk": 0.32
+        }
+      ],
+      "jumpAlloyCost": 14
+    },
+    {
+      "id": "sys_2a",
+      "layer": 2,
+      "col": 0,
+      "name": "Колыбель Карлика",
+      "scanSummary": "⭐ ОБНАРУЖЕНА МАЛАЯ ЗВЕЗДА! Можно захватить в Реактор (4 хода, осада комет). Много He-3.",
+      "scanTag": "⭐ ЗАХВАТ ЗВЕЗДЫ · Карлик",
+      "threatLevel": 3,
+      "jumpFuelCost": 35,
+      "stormTurn": 17,
+      "ambientHullDmg": 2,
+      "powerPenalty": 0,
+      "themeColor": "#f97316",
+      "starCapture": {
+        "targetTier": 2,
+        "starName": "Красный карлик K-14",
+        "turnsRequired": 4,
+        "powerDrain": 9,
+        "cometDamagePerTurn": 20,
+        "desc": "Захват малой звезды в Реактор (+8 МВт навсегда!). Каждый ход тратит 9 МВт, стреляет по кометам (до 4 Оружия/ход → сбивает 8 урона) и бьёт по Щиту и обшивке (20 урона/ход)!",
+        "weaponUsePerTurn": 4,
+        "shieldUsePerTurn": 6
+      },
+      "next": [
+        "sys_3a",
+        "sys_3b"
+      ],
+      "nodes": [
+        {
+          "type": "nebula",
+          "name": "Звёздная корона",
+          "turns": 5,
+          "fuel": 42,
+          "oxygen": 16,
+          "alloys": 0,
+          "comp": 1,
+          "risk": 0.42
+        },
+        {
+          "type": "asteroid",
+          "name": "Оплавленная глыба",
+          "turns": 4,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 48,
+          "comp": 2,
+          "risk": 0.36
+        },
+        {
+          "type": "wreck",
+          "name": "Зонд-наблюдатель",
+          "turns": 5,
+          "fuel": 18,
+          "oxygen": 14,
+          "alloys": 32,
+          "comp": 3,
+          "risk": 0.46
+        }
+      ],
+      "jumpAlloyCost": 18
+    },
+    {
+      "id": "sys_2b",
+      "layer": 2,
+      "col": 1,
+      "name": "Кладбище Ковчегов",
+      "scanSummary": "Сенсоры: обломки прошлых миссий. Много Компонентов и Сплавов, но гнетущий фон (−1 Морали/ход).",
+      "scanTag": "Обломки · Много Комп.",
+      "threatLevel": 2,
+      "jumpFuelCost": 35,
+      "stormTurn": 14,
+      "ambientHullDmg": 2,
+      "ambientMoraleDmg": 1,
+      "powerPenalty": 1,
+      "themeColor": "#64748b",
+      "next": [
+        "sys_3a",
+        "sys_3b",
+        "sys_3c"
+      ],
+      "nodes": [
+        {
+          "type": "wreck",
+          "name": "Ковчег «ПРОМЕТЕЙ»",
+          "turns": 6,
+          "fuel": 32,
+          "oxygen": 24,
+          "alloys": 64,
+          "comp": 4,
+          "risk": 0.54
+        },
+        {
+          "type": "wreck",
+          "name": "Модуль снабжения",
+          "turns": 4,
+          "fuel": 24,
+          "oxygen": 26,
+          "alloys": 40,
+          "comp": 2,
+          "risk": 0.42
+        },
+        {
+          "type": "nebula",
+          "name": "Разлитый Гелий-3",
+          "turns": 4,
+          "fuel": 34,
+          "oxygen": 14,
+          "alloys": 0,
+          "comp": 0,
+          "risk": 0.32
+        },
+        {
+          "type": "capsule",
+          "name": "Выжившие с «Прометея»",
+          "turns": 4,
+          "crew": 3,
+          "fuel": 12,
+          "oxygen": 14,
+          "alloys": 14,
+          "comp": 1,
+          "risk": 0.42
+        }
+      ],
+      "jumpAlloyCost": 18
+    },
+    {
+      "id": "sys_2c",
+      "layer": 2,
+      "col": 2,
+      "name": "Ясли Протозвезды",
+      "scanSummary": "⭐ ОБНАРУЖЕНА МАЛАЯ ЗВЕЗДА! Можно захватить в Реактор (4 хода, осада комет). Богатый пояс руды.",
+      "scanTag": "⭐ ЗАХВАТ ЗВЕЗДЫ · Карлик",
+      "threatLevel": 3,
+      "jumpFuelCost": 35,
+      "stormTurn": 17,
+      "ambientHullDmg": 2,
+      "powerPenalty": 0,
+      "themeColor": "#fb923c",
+      "starCapture": {
+        "targetTier": 2,
+        "starName": "Протокарлик Альфа-9",
+        "turnsRequired": 4,
+        "powerDrain": 9,
+        "cometDamagePerTurn": 20,
+        "desc": "Захват малой звезды в Реактор (+8 МВт навсегда!). Каждый ход тратит 9 МВт, стреляет по кометам (до 4 Оружия/ход → сбивает 8 урона) и бьёт по Щиту и обшивке (20 урона/ход)!",
+        "weaponUsePerTurn": 4,
+        "shieldUsePerTurn": 6
+      },
+      "next": [
+        "sys_3b",
+        "sys_3c"
+      ],
+      "nodes": [
+        {
+          "type": "asteroid",
+          "name": "Протопланетный диск",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 62,
+          "comp": 2,
+          "risk": 0.4
+        },
+        {
+          "type": "nebula",
+          "name": "Газовый вихрь",
+          "turns": 5,
+          "fuel": 38,
+          "oxygen": 22,
+          "alloys": 0,
+          "comp": 1,
+          "risk": 0.4
+        },
+        {
+          "type": "comet",
+          "name": "Огненная комета",
+          "turns": 4,
+          "fuel": 18,
+          "oxygen": 36,
+          "alloys": 20,
+          "comp": 2,
+          "risk": 0.46,
+          "expiresTurn": 12
+        }
+      ],
+      "jumpAlloyCost": 18
+    },
+    {
+      "id": "sys_3a",
+      "layer": 3,
+      "col": 0,
+      "name": "Холодная Пустота",
+      "scanSummary": "Сенсоры: межзвёздный мороз (−4 МВт сети). Огромные запасы льда (O₂) и спокойный космос.",
+      "scanTag": "Холод −4 МВт · Лёд",
+      "threatLevel": 2,
+      "jumpFuelCost": 39,
+      "stormTurn": 14,
+      "ambientHullDmg": 1,
+      "powerPenalty": 4,
+      "themeColor": "#0ea5e9",
+      "next": [
+        "sys_4a",
+        "sys_4b"
+      ],
+      "nodes": [
+        {
+          "type": "comet",
+          "name": "Ледяной гигант",
+          "turns": 5,
+          "fuel": 22,
+          "oxygen": 58,
+          "alloys": 20,
+          "comp": 2,
+          "risk": 0.38,
+          "expiresTurn": 13
+        },
+        {
+          "type": "nebula",
+          "name": "Тёмный газовый след",
+          "turns": 5,
+          "fuel": 44,
+          "oxygen": 20,
+          "alloys": 0,
+          "comp": 1,
+          "risk": 0.36
+        },
+        {
+          "type": "asteroid",
+          "name": "Мёрзлый никель",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 58,
+          "comp": 2,
+          "risk": 0.38
+        },
+        {
+          "type": "capsule",
+          "name": "Дрейфующий маяк жизни",
+          "turns": 4,
+          "crew": 2,
+          "fuel": 14,
+          "oxygen": 18,
+          "alloys": 10,
+          "comp": 1,
+          "risk": 0.35
+        }
+      ],
+      "jumpAlloyCost": 22
+    },
+    {
+      "id": "sys_3b",
+      "layer": 3,
+      "col": 1,
+      "name": "Ионный Шторм",
+      "scanSummary": "Сенсоры: богатейший Гелий-3 и Компоненты, но ионизация повышает риск ЧП.",
+      "scanTag": "Богатый лут · Высокий риск",
+      "threatLevel": 3,
+      "jumpFuelCost": 39,
+      "stormTurn": 14,
+      "ambientHullDmg": 3,
+      "powerPenalty": 2,
+      "themeColor": "#a855f7",
+      "next": [
+        "sys_4a",
+        "sys_4b",
+        "sys_4c"
+      ],
+      "nodes": [
+        {
+          "type": "nebula",
+          "name": "Плазменное ядро",
+          "turns": 5,
+          "fuel": 56,
+          "oxygen": 28,
+          "alloys": 0,
+          "comp": 2,
+          "risk": 0.56
+        },
+        {
+          "type": "wreck",
+          "name": "Научный крейсер",
+          "turns": 6,
+          "fuel": 28,
+          "oxygen": 18,
+          "alloys": 52,
+          "comp": 5,
+          "risk": 0.6
+        },
+        {
+          "type": "asteroid",
+          "name": "Вольфрамовый риф",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 66,
+          "comp": 2,
+          "risk": 0.48
+        },
+        {
+          "type": "capsule",
+          "name": "Экипаж разведчика",
+          "turns": 4,
+          "crew": 3,
+          "fuel": 14,
+          "oxygen": 12,
+          "alloys": 16,
+          "comp": 2,
+          "risk": 0.48
+        }
+      ],
+      "jumpAlloyCost": 22
+    },
+    {
+      "id": "sys_3c",
+      "layer": 3,
+      "col": 2,
+      "name": "Осколки Сверхновой",
+      "scanSummary": "Сенсоры: тяжёлые металлы и радиация (−4 обш/ход). Отлично для апгрейда отсеков.",
+      "scanTag": "Тяжёлая руда · Радиация",
+      "threatLevel": 3,
+      "jumpFuelCost": 39,
+      "stormTurn": 13,
+      "ambientHullDmg": 4,
+      "powerPenalty": 1,
+      "themeColor": "#ef4444",
+      "next": [
+        "sys_4b",
+        "sys_4c"
+      ],
+      "nodes": [
+        {
+          "type": "asteroid",
+          "name": "Иридиевое ядро",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 82,
+          "comp": 3,
+          "risk": 0.5
+        },
+        {
+          "type": "nebula",
+          "name": "Выброс сверхновой",
+          "turns": 5,
+          "fuel": 48,
+          "oxygen": 20,
+          "alloys": 0,
+          "comp": 2,
+          "risk": 0.52
+        },
+        {
+          "type": "comet",
+          "name": "Радиоактивная комета",
+          "turns": 4,
+          "fuel": 24,
+          "oxygen": 40,
+          "alloys": 24,
+          "comp": 3,
+          "risk": 0.54,
+          "expiresTurn": 11
+        },
+        {
+          "type": "capsule",
+          "name": "Отсек инженеров-беглецов",
+          "turns": 4,
+          "crew": 2,
+          "fuel": 12,
+          "oxygen": 12,
+          "alloys": 24,
+          "comp": 1,
+          "risk": 0.45
+        }
+      ],
+      "jumpAlloyCost": 22
+    },
+    {
+      "id": "sys_4a",
+      "layer": 4,
+      "col": 0,
+      "name": "Маяк Пульсара",
+      "scanSummary": "⭐ ОБНАРУЖЕНО НЕЙТРОННОЕ ЯДРО! Захват (5 ходов, сильная осада комет) → Реактор Ур.3 (Пульсар).",
+      "scanTag": "⭐ ЗАХВАТ ЗВЕЗДЫ · Пульсар",
+      "threatLevel": 4,
+      "jumpFuelCost": 47,
+      "stormTurn": 18,
+      "ambientHullDmg": 3,
+      "powerPenalty": 2,
+      "themeColor": "#38bdf8",
+      "starCapture": {
+        "targetTier": 3,
+        "starName": "Нейтронная звезда PSR-7",
+        "turnsRequired": 5,
+        "powerDrain": 14,
+        "cometDamagePerTurn": 30,
+        "desc": "Захват нейтронного ядра (+10 МВт, −50% расхода He-3!). 5 ходов, −14 МВт/ход, обстрел комет 30 урона/ход (орудия тратят до 6 Оружия/ход, щит до 9/ход)!",
+        "weaponUsePerTurn": 6,
+        "shieldUsePerTurn": 9
+      },
+      "next": [
+        "sys_5a",
+        "sys_5b"
+      ],
+      "nodes": [
+        {
+          "type": "nebula",
+          "name": "Пульсарный ветер",
+          "turns": 5,
+          "fuel": 58,
+          "oxygen": 26,
+          "alloys": 0,
+          "comp": 2,
+          "risk": 0.54
+        },
+        {
+          "type": "asteroid",
+          "name": "Сверхплотный осколок",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 78,
+          "comp": 3,
+          "risk": 0.5
+        },
+        {
+          "type": "wreck",
+          "name": "Флагман «ОДИССЕЙ»",
+          "turns": 6,
+          "fuel": 36,
+          "oxygen": 24,
+          "alloys": 62,
+          "comp": 5,
+          "risk": 0.62
+        }
+      ],
+      "jumpAlloyCost": 26
+    },
+    {
+      "id": "sys_4b",
+      "layer": 4,
+      "col": 1,
+      "name": "Тихий Оазис",
+      "scanSummary": "Сенсоры: редкая спокойная система без звёздного ядра. Шанс перевести дух, починиться и поднять Мораль.",
+      "scanTag": "Передышка · Без шторма",
+      "threatLevel": 1,
+      "jumpFuelCost": 47,
+      "stormTurn": 17,
+      "ambientHullDmg": 0,
+      "powerPenalty": 0,
+      "themeColor": "#4ade80",
+      "next": [
+        "sys_5a",
+        "sys_5b"
+      ],
+      "nodes": [
+        {
+          "type": "comet",
+          "name": "Чистый ледник",
+          "turns": 4,
+          "fuel": 24,
+          "oxygen": 62,
+          "alloys": 18,
+          "comp": 2,
+          "risk": 0.28,
+          "expiresTurn": 14
+        },
+        {
+          "type": "nebula",
+          "name": "Мягкая туманность",
+          "turns": 5,
+          "fuel": 50,
+          "oxygen": 32,
+          "alloys": 0,
+          "comp": 1,
+          "risk": 0.28
+        },
+        {
+          "type": "asteroid",
+          "name": "Рудный пояс",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 68,
+          "comp": 2,
+          "risk": 0.3
+        },
+        {
+          "type": "capsule",
+          "name": "Колония-спутник (выжившие)",
+          "turns": 4,
+          "crew": 3,
+          "fuel": 16,
+          "oxygen": 20,
+          "alloys": 16,
+          "comp": 2,
+          "risk": 0.3
+        }
+      ],
+      "jumpAlloyCost": 26
+    },
+    {
+      "id": "sys_4c",
+      "layer": 4,
+      "col": 2,
+      "name": "Двойной Пульсар",
+      "scanSummary": "⭐ ОБНАРУЖЕНО НЕЙТРОННОЕ ЯДРО! Захват (5 ходов, сильная осада) → Реактор Ур.3. Огромные запасы руды.",
+      "scanTag": "⭐ ЗАХВАТ ЗВЕЗДЫ · Пульсар",
+      "threatLevel": 4,
+      "jumpFuelCost": 47,
+      "stormTurn": 18,
+      "ambientHullDmg": 3,
+      "powerPenalty": 2,
+      "themeColor": "#06b6d4",
+      "starCapture": {
+        "targetTier": 3,
+        "starName": "Двойное ядро X-2",
+        "turnsRequired": 5,
+        "powerDrain": 14,
+        "cometDamagePerTurn": 30,
+        "desc": "Захват нейтронного ядра (+10 МВт, −50% расхода He-3!). 5 ходов, −14 МВт/ход, обстрел комет 30 урона/ход (орудия тратят до 6 Оружия/ход, щит до 9/ход)!",
+        "weaponUsePerTurn": 6,
+        "shieldUsePerTurn": 9
+      },
+      "next": [
+        "sys_5a",
+        "sys_5b"
+      ],
+      "nodes": [
+        {
+          "type": "asteroid",
+          "name": "Осколок нейтронки",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 88,
+          "comp": 4,
+          "risk": 0.56
+        },
+        {
+          "type": "nebula",
+          "name": "Аккреционный газ",
+          "turns": 5,
+          "fuel": 56,
+          "oxygen": 24,
+          "alloys": 0,
+          "comp": 2,
+          "risk": 0.54
+        },
+        {
+          "type": "comet",
+          "name": "Серебряная комета",
+          "turns": 4,
+          "fuel": 26,
+          "oxygen": 48,
+          "alloys": 24,
+          "comp": 3,
+          "risk": 0.5,
+          "expiresTurn": 12
+        }
+      ],
+      "jumpAlloyCost": 26
+    },
+    {
+      "id": "sys_5a",
+      "layer": 5,
+      "col": 0,
+      "name": "Межгалактический Разлом",
+      "scanSummary": "Сенсоры: ледяная бездна между галактиками (−6 МВт, −2 Морали/ход). Богатейший газ и обломки.",
+      "scanTag": "Бездна −6 МВт · Богатый лут",
+      "threatLevel": 4,
+      "jumpFuelCost": 55,
+      "stormTurn": 15,
+      "ambientHullDmg": 3,
+      "ambientMoraleDmg": 2,
+      "powerPenalty": 6,
+      "themeColor": "#818cf8",
+      "next": [
+        "sys_6_eden"
+      ],
+      "nodes": [
+        {
+          "type": "nebula",
+          "name": "Древний газовый рукав",
+          "turns": 5,
+          "fuel": 68,
+          "oxygen": 36,
+          "alloys": 0,
+          "comp": 2,
+          "risk": 0.54
+        },
+        {
+          "type": "wreck",
+          "name": "Ковчег «ГЕЛИОС-1»",
+          "turns": 6,
+          "fuel": 42,
+          "oxygen": 30,
+          "alloys": 84,
+          "comp": 6,
+          "risk": 0.64
+        },
+        {
+          "type": "asteroid",
+          "name": "Чёрный монолит",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 92,
+          "comp": 3,
+          "risk": 0.52
+        },
+        {
+          "type": "capsule",
+          "name": "Последний челнок «Гелиоса»",
+          "turns": 4,
+          "crew": 3,
+          "fuel": 18,
+          "oxygen": 18,
+          "alloys": 22,
+          "comp": 2,
+          "risk": 0.52
+        }
+      ],
+      "jumpAlloyCost": 30
+    },
+    {
+      "id": "sys_5b",
+      "layer": 5,
+      "col": 2,
+      "name": "Порог Андромеды",
+      "scanSummary": "Сенсоры: радиационный шторм (−6 обш/ход), но огромные залежи Гелия-3 и сплавов перед финалом.",
+      "scanTag": "Радиация −6 обш · Макс. руда",
+      "threatLevel": 4,
+      "jumpFuelCost": 55,
+      "stormTurn": 15,
+      "ambientHullDmg": 6,
+      "powerPenalty": 3,
+      "themeColor": "#f43f5e",
+      "next": [
+        "sys_6_eden"
+      ],
+      "nodes": [
+        {
+          "type": "nebula",
+          "name": "Корона Андромеды",
+          "turns": 5,
+          "fuel": 74,
+          "oxygen": 30,
+          "alloys": 0,
+          "comp": 3,
+          "risk": 0.6
+        },
+        {
+          "type": "asteroid",
+          "name": "Золото-иридиевый риф",
+          "turns": 5,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 98,
+          "comp": 4,
+          "risk": 0.56
+        },
+        {
+          "type": "comet",
+          "name": "Гигантская комета Ω",
+          "turns": 4,
+          "fuel": 32,
+          "oxygen": 66,
+          "alloys": 28,
+          "comp": 4,
+          "risk": 0.58,
+          "expiresTurn": 12
+        },
+        {
+          "type": "capsule",
+          "name": "Капсула десанта-дезертира",
+          "turns": 4,
+          "crew": 3,
+          "fuel": 20,
+          "oxygen": 14,
+          "alloys": 24,
+          "comp": 2,
+          "risk": 0.54
+        }
+      ],
+      "jumpAlloyCost": 30
+    },
+    {
+      "id": "sys_6_eden",
+      "layer": 6,
+      "col": 1,
+      "name": "Новая Галактика · Эдем",
+      "scanSummary": "ФИНАЛ! Захвати Микро-квазар орбиты (5 ходов под яростным дождём комет), чтобы стабилизировать врата и высадить колонистов!",
+      "scanTag": "★ ФИНАЛЬНЫЙ ЗАХВАТ · ЭДЕМ",
+      "isFinale": true,
+      "threatLevel": 5,
+      "jumpFuelCost": 0,
+      "stormTurn": 20,
+      "ambientHullDmg": 3,
+      "powerPenalty": 3,
+      "themeColor": "#4ade80",
+      "starCapture": {
+        "targetTier": 4,
+        "isVictoryCapture": true,
+        "starName": "Орбитальный Квазар Эдема",
+        "turnsRequired": 6,
+        "powerDrain": 18,
+        "cometDamagePerTurn": 40,
+        "desc": "ФИНАЛЬНАЯ ОСАДА (6 ходов)! −18 МВт/ход и яростная кометная буря 40 урона/ход (орудия тратят до 8 Оружия/ход, щит до 12/ход). Выдержи осаду, чтобы высадить человечество!",
+        "weaponUsePerTurn": 8,
+        "shieldUsePerTurn": 12
+      },
+      "next": [],
+      "nodes": [
+        {
+          "type": "nebula",
+          "name": "Верхняя атмосфера",
+          "turns": 4,
+          "fuel": 50,
+          "oxygen": 48,
+          "alloys": 0,
+          "comp": 2,
+          "risk": 0.44
+        },
+        {
+          "type": "asteroid",
+          "name": "Орбитальное кольцо",
+          "turns": 4,
+          "fuel": 0,
+          "oxygen": 0,
+          "alloys": 80,
+          "comp": 3,
+          "risk": 0.46
+        },
+        {
+          "type": "comet",
+          "name": "Спутник-ледник",
+          "turns": 4,
+          "fuel": 24,
+          "oxygen": 60,
+          "alloys": 20,
+          "comp": 2,
+          "risk": 0.42,
+          "expiresTurn": 16
+        }
+      ],
+      "jumpAlloyCost": 0
+    }
+  ],
+  "expeditionIncidents": [
+    {
+      "id": "comet_geyser",
+      "types": [
+        "comet"
+      ],
+      "title": "Выброс ледяного гейзера!",
+      "desc": "Комета раскололась прямо под буром — мощная струя газа рвёт стыковочные захваты шаттла.",
+      "choices": [
+        {
+          "label": "Экстренно отстыковаться (шаттл вернётся сейчас с 60% груза)",
+          "effect": "abort_safe"
+        },
+        {
+          "label": "Удержать захваты вручную (+25% груза, но 1 раненый и −8% обш.)",
+          "effect": "push_risk",
+          "injure": 1,
+          "hull": -8,
+          "bonusYield": 0.25
+        },
+        {
+          "label": "Укрепить анкеры (−12 Сплавов, безопасно +20% добычи)",
+          "effect": "spend_alloys",
+          "costAlloys": 12,
+          "bonusYield": 0.2
+        }
+      ]
+    },
+    {
+      "id": "nebula_arc",
+      "types": [
+        "nebula"
+      ],
+      "title": "Плазменный разряд в туманности!",
+      "desc": "Статическая дуга накрывает газосборник — приборы зашкаливают.",
+      "choices": [
+        {
+          "label": "Прервать забор и вернуться с 60% добытого",
+          "effect": "abort_safe"
+        },
+        {
+          "label": "Пробить разряд форсажем (+30% He-3, но 1 раненый)",
+          "effect": "push_risk",
+          "injure": 1,
+          "hull": -5,
+          "bonusYield": 0.3
+        },
+        {
+          "label": "Сбросить буфер (−12 O₂ на продувку, безопасно +15% добычи)",
+          "effect": "spend_o2",
+          "costO2": 12,
+          "bonusYield": 0.15
+        }
+      ]
+    },
+    {
+      "id": "asteroid_collapse",
+      "types": [
+        "asteroid"
+      ],
+      "title": "Обвал породы на астероиде!",
+      "desc": "Глубокое бурение сместило каменную плиту — под ней чистая руда, но команда под угрозой.",
+      "choices": [
+        {
+          "label": "Отойти без потерь (возврат сейчас с 60% груза)",
+          "effect": "abort_safe"
+        },
+        {
+          "label": "Вырезать жилу до конца (+35% Сплавов, 1 раненый, −4 Морали)",
+          "effect": "push_risk",
+          "injure": 1,
+          "morale": -4,
+          "bonusYield": 0.35
+        },
+        {
+          "label": "Подорвать плиту зарядом (−10 He-3, безопасно +25% Сплавов)",
+          "effect": "spend_fuel",
+          "costFuel": 10,
+          "bonusYield": 0.25
+        }
+      ]
+    },
+    {
+      "id": "wreck_cryo",
+      "types": [
+        "wreck"
+      ],
+      "title": "Сигнал из уцелевшего шлюза!",
+      "desc": "Внутри обломков найдены 2 живых техника и ящик редких компонентов — кислород у них на исходе.",
+      "choices": [
+        {
+          "label": "Спасти выживших (+2 экипажа, +8 Морали, но −30% груза)",
+          "effect": "rescue_crew",
+          "crew": 2,
+          "morale": 8,
+          "bonusYield": -0.3
+        },
+        {
+          "label": "Забрать только склад (+2 Компонента, +25% груза, −10 Морали)",
+          "effect": "loot_cold",
+          "comp": 2,
+          "morale": -10,
+          "bonusYield": 0.25
+        },
+        {
+          "label": "Забрать и людей, и склад (−14 O₂, +2 экипажа, +1 Компонент, +6 Морали)",
+          "effect": "heroic_save",
+          "costO2": 14,
+          "crew": 2,
+          "comp": 1,
+          "morale": 6
+        }
+      ]
+    },
+    {
+      "id": "capsule_signal",
+      "types": [
+        "capsule"
+      ],
+      "title": "Капсула дрейфует в поле обломков!",
+      "desc": "Сигнал жизни слабеет: люк заклинило, а вокруг капсулы вращается облако острых осколков.",
+      "choices": [
+        {
+          "label": "Аккуратно вскрыть люк (−10 Сплавов на резку, спасаем всех безопасно +4 Морали)",
+          "effect": "spend_alloys",
+          "costAlloys": 10,
+          "bonusYield": 0.15
+        },
+        {
+          "label": "Стыковаться на риске (спасаем всех, но 1 раненый и −6% обш.)",
+          "effect": "push_risk",
+          "injure": 1,
+          "hull": -6,
+          "bonusYield": 0.0
+        },
+        {
+          "label": "Отойти и забрать только припасы (безопасно, но без спасения людей)",
+          "effect": "abort_safe"
+        }
+      ]
+    }
+  ],
+  "dilemmas": [
+    {
+      "id": "cryo_leak",
+      "minLayer": 1,
+      "title": "Утечка хладагента в Криосекции",
+      "desc": "В блоке C падает температура. Инженеры просят 18 Сплавов на герметизацию, иначе 65 колонистов не переживут сбой.",
+      "choices": [
+        {
+          "label": "Выделить 18 Сплавов и спасти блок (−18 Сплавов, +5 Морали)",
+          "alloys": -18,
+          "morale": 5
+        },
+        {
+          "label": "Перевести на ручное охлаждение (1 раненый, −12 O₂)",
+          "injure": 1,
+          "oxygen": -12,
+          "morale": 1
+        },
+        {
+          "label": "Отсечь блок C ради запасов (−65 крио, −12 Морали)",
+          "cryo": -65,
+          "morale": -12
+        }
+      ]
+    },
+    {
+      "id": "crew_strike",
+      "minLayer": 1,
+      "title": "Усталость экипажа",
+      "desc": "Команда измотана бесконечной перестройкой энергосети и просит выдать двойную порцию пайков.",
+      "choices": [
+        {
+          "label": "Выдать усиленный паёк (−20 Еды, +14 Морали)",
+          "food": -20,
+          "morale": 14
+        },
+        {
+          "label": "Призвать к дисциплине и напомнить о цели (−5 Морали)",
+          "morale": -5
+        },
+        {
+          "label": "Усилить смены принудительно (+14 Сплавов, −11 Морали, 1 раненый)",
+          "alloys": 14,
+          "morale": -11,
+          "injure": 1
+        }
+      ]
+    },
+    {
+      "id": "solar_beacon",
+      "minLayer": 2,
+      "title": "Последний сигнал с Земли",
+      "desc": "Антенны поймали эхо прощальной передачи с погибшей орбиты. Транслировать её по отсекам или заглушить?",
+      "choices": [
+        {
+          "label": "Включить минуту памяти (+11 Морали, −8 Еды)",
+          "morale": 11,
+          "food": -8
+        },
+        {
+          "label": "Заглушить сигнал ради спокойствия (−5 Морали, +10 O₂ экономии)",
+          "morale": -5,
+          "oxygen": 10
+        },
+        {
+          "label": "Расшифровать научные пакеты (+2 Компонента, −4 Морали)",
+          "comp": 2,
+          "morale": -4
+        }
+      ]
+    },
+    {
+      "id": "hydro_mold",
+      "minLayer": 3,
+      "title": "Грибок в Огородах",
+      "desc": "Агрессивные споры поразили треть гидропонных лотков. Нужна срочная продувка озоном.",
+      "choices": [
+        {
+          "label": "Продуть кислородом (−18 O₂, урожай спасён)",
+          "oxygen": -18,
+          "morale": 2
+        },
+        {
+          "label": "Вырезать поражённый сектор (−24 Еды, −5 Морали)",
+          "food": -24,
+          "morale": -5
+        },
+        {
+          "label": "Синтезировать реагент (−1 Компонент, +18 Еды, +4 Морали)",
+          "comp": -1,
+          "food": 18,
+          "morale": 4
+        }
+      ]
+    },
+    {
+      "id": "black_market",
+      "minLayer": 3,
+      "title": "Обходной контур реактора",
+      "desc": "Техник предлагает рискнуть и перегнать остатки дейтерия в Гелий-3 прямо на ходу.",
+      "choices": [
+        {
+          "label": "Запустить схему (+20 He-3, но −10% обшивки)",
+          "fuel": 20,
+          "hull": -10
+        },
+        {
+          "label": "Собрать безопасно (−1 Компонент, +24 He-3, +4 Морали)",
+          "comp": -1,
+          "fuel": 24,
+          "morale": 4
+        },
+        {
+          "label": "Запретить эксперимент (−3 Морали)",
+          "morale": -3
+        }
+      ]
+    },
+    {
+      "id": "mutiny_whisper",
+      "minLayer": 4,
+      "title": "Сомнения перед Разломом",
+      "desc": "Часть экипажа боится межгалактической пустоты и требует искать приют в ближайшем мёртвом поясе.",
+      "choices": [
+        {
+          "label": "Провести открытый совет с провиантом (−16 Еды, +13 Морали)",
+          "food": -16,
+          "morale": 13
+        },
+        {
+          "label": "Разбудить офицеров из крио (−20 крио, +2 экипажа, +6 Морали)",
+          "cryo": -20,
+          "crew": 2,
+          "morale": 6
+        },
+        {
+          "label": "Изолировать зачинщиков (−1 экипаж, −9 Морали)",
+          "crew": -1,
+          "morale": -9
+        }
+      ]
+    }
+  ],
+  "scheduledThreats": [
+    {
+      "id": "space_marines",
+      "triggerTurn": 12,
+      "warningTurns": 10,
+      "name": "Космический десант",
+      "short": "ДЕСАНТ",
+      "detectMsg": "⚠ Сенсоры засекли абордажный флот космического десанта! Встреча через 10 ходов. Накопи 20 Щита и 15 Оружия в отсеке «Щиты и Орудия» или смени маршрут за He-3!",
+      "encounterTitle": "Абордаж: Космический десант вышел на перехват!",
+      "encounterDesc": "Штурмовые челноки окружили EXODUS-0. Командир десанта требует дань людьми и ресурсами — либо обещает взять Ковчег штурмом.",
+      "rerouteFuelCost": 18,
+      "rerouteDelayTurns": 5,
+      "maxReroutes": 2,
+      "reqShield": 20,
+      "reqWeapon": 15,
+      "fightCostShield": 14,
+      "fightCostWeapon": 12,
+      "fightRewards": {
+        "alloys": 28,
+        "fuel": 20,
+        "comp": 2,
+        "morale": 10
+      },
+      "negotiateCost": {
+        "crew": 2,
+        "alloys": 16,
+        "food": 14,
+        "oxygen": 12,
+        "morale": -10
+      },
+      "breachPenalty": {
+        "hull": -34,
+        "injure": 2,
+        "alloys": -18,
+        "morale": -9
+      }
+    },
+    {
+      "id": "quarantine_dreadnought",
+      "triggerTurn": 34,
+      "warningTurns": 10,
+      "name": "Перехватчик «Карантин»",
+      "short": "КАРАНТИН",
+      "detectMsg": "⚠ Дальний радар засёк древний дредноут-перехватчик «Карантин»! Выйдет на огневую через 10 ходов. Нужны 34 Щита и 26 Оружия для боя — либо манёвр уклонения за He-3!",
+      "encounterTitle": "Угроза: Дредноут «Карантин» наводит орудия!",
+      "encounterDesc": "Автоматический страж межгалактического рубежа классифицировал Ковчег как вторжение. У тебя один шанс: разбить его в бою, откупиться ценой людей и ресурсов или прорываться под огнём.",
+      "rerouteFuelCost": 26,
+      "rerouteDelayTurns": 5,
+      "maxReroutes": 2,
+      "reqShield": 34,
+      "reqWeapon": 26,
+      "fightCostShield": 24,
+      "fightCostWeapon": 20,
+      "fightRewards": {
+        "alloys": 42,
+        "fuel": 26,
+        "comp": 4,
+        "morale": 12
+      },
+      "negotiateCost": {
+        "crew": 2,
+        "alloys": 24,
+        "food": 18,
+        "oxygen": 18,
+        "comp": 2,
+        "morale": -12
+      },
+      "breachPenalty": {
+        "hull": -42,
+        "cryo": -75,
+        "injure": 2,
+        "morale": -12
+      }
+    }
+  ]
+}

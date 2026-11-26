@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+  <rect x="8" y="8" width="80" height="80" rx="14" fill="#1d1410" stroke="#fb923c" stroke-opacity="0.38" stroke-width="2"/>
+  <!-- Портал 3D-фабрикатора -->
+  <path d="M22 72 V24 H74 V72" stroke="#64748b" stroke-width="3" stroke-linecap="round"/>
+  <!-- Лазерная головка -->
+  <rect x="40" y="20" width="16" height="10" rx="2" fill="#fb923c"/>
+  <path d="M48 30 L48 52" stroke="#fde047" stroke-width="2.6"/>
+  <circle cx="48" cy="52" r="5" fill="#fb923c" fill-opacity="0.5"/>
+  <circle cx="48" cy="52" r="2.2" fill="#ffffff"/>
+  <!-- Синтезируемый шестиугольный слиток сплава -->
+  <polygon points="48,44 62,52 62,66 48,74 34,66 34,52" fill="#334155" stroke="#fb923c" stroke-width="2.2"/>
+  <polygon points="48,50 56,55 56,63 48,68 40,63 40,55" fill="#fb923c" fill-opacity="0.45"/>
+  <!-- Платформа -->
+  <rect x="18" y="72" width="60" height="6" rx="2" fill="#475569"/>
+</svg>

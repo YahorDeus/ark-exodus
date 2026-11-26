@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" fill="none">
+  <defs>
+    <linearGradient id="hullMetal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1b2946"/>
+      <stop offset="50%" stop-color="#0f182e"/>
+      <stop offset="100%" stop-color="#16223c"/>
+    </linearGradient>
+    <linearGradient id="hullTrim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="50%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="bridgeGlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="nozzleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Внешние радиаторы охлаждения сверху и снизу -->
+  <g stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5">
+    <path d="M210 56 L290 22 L420 22 L438 56 Z" fill="#0b1326" fill-opacity="0.9"/>
+    <line x1="255" y1="22" x2="255" y2="56"/><line x1="300" y1="22" x2="300" y2="56"/>
+    <line x1="345" y1="22" x2="345" y2="56"/><line x1="390" y1="22" x2="390" y2="56"/>
+
+    <path d="M210 404 L290 438 L420 438 L438 404 Z" fill="#0b1326" fill-opacity="0.9"/>
+    <line x1="255" y1="404" x2="255" y2="438"/><line x1="300" y1="404" x2="300" y2="438"/>
+    <line x1="345" y1="404" x2="345" y2="438"/><line x1="390" y1="404" x2="390" y2="438"/>
+  </g>
+
+  <!-- Антенны дальнего сканера в носу -->
+  <g stroke="#64748b" stroke-width="2" stroke-linecap="round">
+    <line x1="785" y1="158" x2="862" y2="128"/>
+    <line x1="785" y1="302" x2="862" y2="332"/>
+    <line x1="848" y1="230" x2="892" y2="230" stroke="#38bdf8" stroke-width="2.5"/>
+    <circle cx="862" cy="128" r="3.5" fill="#38bdf8"/>
+    <circle cx="862" cy="332" r="3.5" fill="#38bdf8"/>
+    <circle cx="892" cy="230" r="4" fill="#fbbf24"/>
+  </g>
+
+  <!-- Три маршевых сопла слева -->
+  <g fill="url(#nozzleGrad)" stroke="#64748b" stroke-width="1.8">
+    <path d="M22 146 L68 136 L68 184 L22 174 Z"/>
+    <path d="M12 204 L68 194 L68 266 L12 256 Z"/>
+    <path d="M22 286 L68 276 L68 324 L22 314 Z"/>
+  </g>
+
+  <!-- Основной бронекорпус Ковчега -->
+  <path d="M62 128 L168 58 L678 58 L792 148 L850 206 L850 254 L792 312 L678 402 L168 402 L62 332 L48 230 Z"
+        fill="url(#hullMetal)" stroke="url(#hullTrim)" stroke-width="3"/>
+
+  <!-- Внутренняя броневая обвязка и шпангоуты -->
+  <path d="M84 142 L176 76 L666 76 L768 158 L818 212 L818 248 L768 302 L666 384 L176 384 L84 318 L72 230 Z"
+        fill="#080f1f" fill-opacity="0.72" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Декоративные шпангоуты корпуса -->
+  <g stroke="#1e293b" stroke-width="2">
+    <line x1="215" y1="76" x2="215" y2="384"/>
+    <line x1="382" y1="76" x2="382" y2="384"/>
+    <line x1="550" y1="76" x2="550" y2="384"/>
+    <line x1="716" y1="115" x2="716" y2="345"/>
+    <line x1="84" y1="230" x2="730" y2="230" stroke-dasharray="10 8" stroke="#38bdf8" stroke-opacity="0.22"/>
+  </g>
+
+  <!-- Капитанский мостик (обзорный купол справа) -->
+  <path d="M735 168 L808 206 L822 230 L808 254 L735 292 Z"
+        fill="url(#bridgeGlow)" stroke="#38bdf8" stroke-width="1.8"/>
+  <g stroke="#bae6fd" stroke-opacity="0.65" stroke-width="1.5">
+    <line x1="752" y1="192" x2="795" y2="212"/>
+    <line x1="752" y1="230" x2="808" y2="230"/>
+    <line x1="752" y1="268" x2="795" y2="248"/>
+  </g>
+
+  <!-- Навигационные огни -->
+  <circle cx="172" cy="64" r="3.5" fill="#ef4444"/>
+  <circle cx="172" cy="396" r="3.5" fill="#4ade80"/>
+  <circle cx="676" cy="64" r="3.5" fill="#38bdf8"/>
+  <circle cx="676" cy="396" r="3.5" fill="#38bdf8"/>
+
+  <!-- Панельные заклёпки и бронированные полосы -->
+  <path d="M480 58 L595 58 L585 72 L490 72 Z" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <path d="M480 402 L595 402 L585 388 L490 388 Z" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+</svg>

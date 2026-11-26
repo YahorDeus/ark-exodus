@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 80" fill="none">
+  <!-- Флотилия Космического Десанта (абордажные штурмовики) -->
+  <rect width="160" height="80" rx="10" fill="#180b12"/>
+  <g opacity="0.25" stroke="#ef4444" stroke-width="1">
+    <line x1="0" y1="20" x2="160" y2="20"/><line x1="0" y1="60" x2="160" y2="60"/>
+    <line x1="40" y1="0" x2="40" y2="80"/><line x1="120" y1="0" x2="120" y2="80"/>
+  </g>
+  <!-- Ведущий штурмовой челнок -->
+  <path d="M52 24 L112 32 L128 40 L112 48 L52 56 L62 40 Z" fill="#3f1019" stroke="#f87171" stroke-width="2.2"/>
+  <path d="M98 34 L118 40 L98 46 Z" fill="#ef4444"/>
+  <path d="M114 29 L136 24 M114 51 L136 56" stroke="#fca5a5" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M56 35 L32 40 L56 45 Z" fill="#fb923c"/>
+  <!-- Два фланговых перехватчика -->
+  <path d="M22 14 L50 18 L58 22 L50 26 L22 30 L28 22 Z" fill="#2c0d14" stroke="#fb7185" stroke-width="1.6"/>
+  <path d="M22 50 L50 54 L58 58 L50 62 L22 66 L28 58 Z" fill="#2c0d14" stroke="#fb7185" stroke-width="1.6"/>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+  <rect x="8" y="8" width="80" height="80" rx="14" fill="#0b172c" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="2"/>
+  <!-- Два цилиндрических баллона O2 -->
+  <rect x="20" y="22" width="20" height="52" rx="10" fill="#0f2942" stroke="#38bdf8" stroke-width="2.2"/>
+  <rect x="56" y="22" width="20" height="52" rx="10" fill="#0f2942" stroke="#38bdf8" stroke-width="2.2"/>
+  <!-- Уровень жидкого кислорода -->
+  <rect x="24" y="42" width="12" height="28" rx="6" fill="#38bdf8" fill-opacity="0.65"/>
+  <rect x="60" y="34" width="12" height="36" rx="6" fill="#67e8f9" fill-opacity="0.7"/>
+  <!-- Центральная турбина -->
+  <circle cx="48" cy="48" r="11" fill="#0c1b33" stroke="#bae6fd" stroke-width="2"/>
+  <path d="M48 40 L52 48 L48 56 L44 48 Z" fill="#38bdf8"/>
+  <path d="M40 48 L48 44 L56 48 L48 52 Z" fill="#67e8f9"/>
+  <!-- Трубки -->
+  <path d="M30 22 V16 H66 V22" stroke="#7dd3fc" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="30" cy="34" r="2.2" fill="#e0f2fe"/>
+  <circle cx="66" cy="28" r="2.2" fill="#e0f2fe"/>
+</svg>

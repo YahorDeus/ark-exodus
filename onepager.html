@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARK EXODUS — One-Pager (GamesUp42)</title>
+  <style>
+    :root {
+      --bg: #060a16;
+      --card: #0e162b;
+      --border: rgba(148, 163, 184, 0.22);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --cyan: #38bdf8;
+      --gold: #fbbf24;
+      --green: #4ade80;
+      --purple: #c084fc;
+      --red: #f87171;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 20% 0%, #111c38 0%, var(--bg) 60%);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.45;
+      padding: 24px 16px 36px;
+    }
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      background: rgba(11, 17, 34, 0.94);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 18px;
+      padding: 28px 32px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.35fr 0.95fr;
+      gap: 22px;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+    .eyebrow {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+    h1 {
+      font-size: 34px;
+      letter-spacing: 0.06em;
+      line-height: 1.05;
+      background: linear-gradient(90deg, #fff, #38bdf8 55%, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .pitch {
+      font-size: 13.5px;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+    }
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: #e2e8f0;
+    }
+    .pill.gold { border-color: rgba(251, 191, 36, 0.45); color: #fde68a; background: rgba(251, 191, 36, 0.1); }
+    .pill.cyan { border-color: rgba(56, 189, 248, 0.45); color: #bae6fd; background: rgba(56, 189, 248, 0.1); }
+
+    .hero-art-box {
+      background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.14), rgba(6, 10, 22, 0.85));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+    .hero-art-box img {
+      width: 100%;
+      max-height: 136px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.35));
+    }
+    .hero-actions {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 7px 13px;
+      border-radius: 9px;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+    .btn-play { background: linear-gradient(135deg, #fbbf24, #ea580c); color: #070a14; }
+    .btn-print { background: rgba(255,255,255,0.08); color: #e2e8f0; border: 1px solid var(--border); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 15px;
+    }
+    .card h2 {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 7px;
+    }
+    .card h2.gold { color: var(--gold); }
+    .card h2.green { color: var(--green); }
+    .card h2.purple { color: var(--purple); }
+    .card p, .card li {
+      font-size: 12.2px;
+      color: #cbd5e1;
+      line-height: 1.44;
+    }
+    .card ul {
+      padding-left: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .card strong { color: #f8fafc; }
+
+    .usp-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 6px;
+    }
+    .usp-row img {
+      width: 34px;
+      height: 28px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .roadmap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.8px;
+      margin-top: 4px;
+    }
+    .roadmap-table th, .roadmap-table td {
+      text-align: left;
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+      color: #cbd5e1;
+    }
+    .roadmap-table th {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .roadmap-table td:first-child {
+      white-space: nowrap;
+      font-weight: 800;
+      color: #f8fafc;
+      width: 90px;
+    }
+
+    .footer {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    .footer a { color: var(--cyan); text-decoration: none; }
+
+    @media (max-width: 780px) {
+      .hero, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+    @media print {
+      body { background: #fff; color: #0f172a; padding: 0; }
+      .page { box-shadow: none; border: none; border-radius: 0; padding: 12px 16px; background: #fff; color: #0f172a; max-width: 100%; }
+      .card, .hero-art-box { background: #f8fafc; border-color: #cbd5e1; }
+      .card p, .card li, .pitch, .roadmap-table td { color: #1e293b; }
+      .card strong, .roadmap-table td:first-child { color: #0f172a; }
+      .card h2 { color: #0369a1; }
+      .hero-actions { display: none; }
+      h1 { -webkit-text-fill-color: #0f172a; background: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <!-- ШАПКА -->
+    <section class="hero">
+      <div>
+        <div class="eyebrow">ONE-PAGER · STEAM PC / STEAM DECK · R&amp;D PROTOTYPE</div>
+        <h1>ARK EXODUS</h1>
+        <p class="pitch">
+          <strong>Пошаговый кризисный Survival Management о последнем корабле-ковчеге человечества.</strong>
+          Земля уничтожена. Веди станцию <strong>EXODUS-0</strong> и 1 000 колонистов в криокапсулах через ветвящуюся галактику, преобразуя Энергию в ресурсы, спасая выживших и захватывая малые звёзды прямо в Реактор под кометным обстрелом.
+        </p>
+        <div class="pills">
+          <span class="pill cyan">Turn-Based Survival Strategy</span>
+          <span class="pill gold">Референсы: FTL × Frostpunk × IXION</span>
+          <span class="pill">Прототип: ~45 мин (~70 ходов)</span>
+          <span class="pill">Полная версия: 6 месяцев</span>
+          <span class="pill">Steam: $12.99</span>
+        </div>
+      </div>
+
+      <div class="hero-art-box">
+        <img src="assets/svg/ark_hull.svg" alt="Ковчег EXODUS-0" />
+        <div class="hero-actions">
+          <a href="./" class="btn btn-play">▶ Играть в браузере</a>
+          <button onclick="window.print()" class="btn btn-print">Печать / PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ИДЕЯ И КОР-ЦИКЛ -->
+    <section class="grid-2">
+      <div class="card">
+        <h2>О чём игра и что делает игрок</h2>
+        <ul>
+          <li><strong>Пошаговая экономика «Энергия → любой ресурс»:</strong> станция оснащена синтезаторами (Огороды, O₂, Сплавы/Компоненты, Щиты и Орудия, Медблок, Шлюз). Каждый назначенный человек тратит МВт энергии и даёт ресурс за ход — игрок видит точный прогноз до конца хода.</li>
+          <li><strong>Спираль масштабирования и дефицита:</strong> старт с 8 людьми и жёсткими минусами. Спасаешь потерянный экипаж в системах (8 → 15+ чел.), расширяешь слоты отсеков апгрейдами — но каждый новый человек увеличивает расход O₂, Еды и энергии.</li>
+          <li><strong>3 масштаба с бесшовным зумом (как в Spore):</strong> 2D-разрез Ковчега с анимированными интерьерами → 3D-карта Системы под углом 55° (экспедиции на 3–5 ходов с ЧП) → 3D спиральная Галактика (выбор маршрута по общей разведке).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 class="gold">Чем выделяется и почему хочется играть дальше</h2>
+        <div class="usp-row">
+          <img src="assets/svg/star_core.svg" alt="" />
+          <p><strong>Захват Звезды в Реактор (многоходовая осада):</strong> модернизация отсека Реактора даёт лишь слоты инженеров — усилить само ядро можно <em>только</em> захватом малой звезды (4–6 ходов). Захват сжирает энергию и вызывает волны комет, расходуя Оружие и Щит каждый ход.</p>
+        </div>
+        <div class="usp-row">
+          <img src="assets/svg/threat_marines.svg" alt="" />
+          <p><strong>10-ходовые угрозы (горизонт планирования):</strong> «Космический десант» и Дредноут «Карантин» засекаются за 10 ходов. Игрок решает: копить Щит/Оружие ради боя и трофеев, сжигать Гелий-3 на смену маршрута (+5 ходов) или откупаться людьми и припасами.</p>
+        </div>
+        <div class="usp-row" style="margin-bottom:0;">
+          <img src="assets/svg/node_capsule.svg" alt="" />
+          <p><strong>Живой корабль:</strong> в каждом отсеке анимированные космонавты с ролевыми циклами (лейка с каплями и лопатка в Огородах, сварка, турель, ЭКГ) + адаптивный саундтрек.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- КОММЕРЧЕСКИЙ ПОТЕНЦИАЛ, БАЛАНС И РЫНОК STEAM -->
+    <section class="grid-3">
+      <div class="card">
+        <h2 class="green">Коммерческий потенциал (Steam)</h2>
+        <ul>
+          <li><strong>Проверенная ниша:</strong> гибриды FTL / Frostpunk / IXION стабильно дают высокий средний чек и длинную вишлист-воронку.</li>
+          <li><strong>Позиционирование:</strong> $12.99 (2–3 часа на забег, высокая реиграбельность через разные классы Ковчегов, ветки галактик и концовки).</li>
+          <li><strong>Органика и виральность:</strong> 3-масштабный зум (разрез с человечками → 3D-галактика) и кометные осады отлично считываются в 15-секундных роликах TikTok / YouTube Shorts и на стримах.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 class="purple">Проверка баланса и AI-пайплайн</h2>
+        <ul>
+          <li><strong>Единый источник правды:</strong> все параметры в <code>ark_balance.json</code>, проверяются Python-симулятором (200 полных кампаний).</li>
+          <li><strong>Подтверждённый темп:</strong> медиана прохождения прототипа — <strong>71 ход (~45 мин)</strong>, 70% побед у рационального бота (реальный дефицит O₂/боезапаса), расход ~126 Оружия и ~56 Щита.</li>
+          <li><strong>Техбаза прототипа:</strong> чистый HTML5/JS/Canvas 2D, 18 векторных SVG, процедурный адаптивный Web Audio — 0 внешних зависимостей, мгновенный запуск.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Масштабирование полной версии</h2>
+        <ul>
+          <li><strong>Профессии экипажа:</strong> Инженеры, Биологи, Стрелки, Медики с перками и моральной психологией.</li>
+          <li><strong>Мета-прогрессия:</strong> 3 стартовых Ковчега с разными механиками + процедурная генерация галактик и 60+ событий.</li>
+          <li><strong>Релиз на ПК:</strong> обёртка Electron / Tauri + Steamworks (достижения, облачные сохранения, полная поддержка Steam Deck), локализация EN / RU / ZH / DE.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ПЛАН ПРОИЗВОДСТВА ДО 6 МЕСЯЦЕВ -->
+    <section class="card">
+      <h2 class="gold">Реалистичный план производства полной версии — 6 месяцев (AI Game Producer + AI-агенты)</h2>
+      <table class="roadmap-table">
+        <thead>
+          <tr>
+            <th>Этап</th>
+            <th>Ключевые задачи</th>
+            <th>Артефакт / Контрольная точка</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Месяц 1</td>
+            <td>Архитектура релизного билда (TypeScript + PixiJS/Canvas + Tauri), процедурная генерация карт Галактики, профессии экипажа и дерево технологий.</td>
+            <td>Vertical Slice с 1 полной процедурной галактикой.</td>
+          </tr>
+          <tr>
+            <td>Месяц 2–3</td>
+            <td>Контент-пайплайн с AI: 60+ кризисных событий и ЧП, 6 типов угроз с 10-ходовым отсчётом, 4 класса Звёздных ядер, 3 стартовых Ковчега, визуальный полиш всех отсеков и эффектов.</td>
+            <td>Alpha-билд (2–3 часа на забег), автосимуляция баланса на 1 000 прогонов.</td>
+          </tr>
+          <tr>
+            <td>Месяц 4</td>
+            <td>Полноценный звук и адаптивный OST, обучение в первом секторе (интерактивный онбординг), Steamworks SDK, управление для Steam Deck.</td>
+            <td>Публичное демо + страница Steam + старт регулярного devlog (YouTube/TikTok).</td>
+          </tr>
+          <tr>
+            <td>Месяц 5</td>
+            <td>Участие в Steam Next Fest, сбор телеметрии и обратной связи игроков, доработка баланса, UX и локализация (EN / RU / ZH / DE).</td>
+            <td>Release Candidate с подтверждённой воронкой вишлистов и удержания демо.</td>
+          </tr>
+          <tr>
+            <td>Месяц 6</td>
+            <td>Финальный QA, оптимизация, трейлер, рассылка ключей стратег-стримерам, релиз 1.0 в Steam и патч первой недели.</td>
+            <td>Коммерческий релиз в Steam.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <div><strong>Автор:</strong> Егор Савицкий · Telegram: <a href="https://t.me/i_Deus">@i_Deus</a> · Портфолио: <a href="https://esavitsky.pro">https://esavitsky.pro</a></div>
+      <div>ARK EXODUS · Прототип для отбора AI Game Producer (GamesUp42)</div>
+    </footer>
+  </main>
+</body>
+</html>

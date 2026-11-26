@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 110" fill="none">
+  <defs>
+    <linearGradient id="cometTail" x1="88" y1="68" x2="8" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#67e8f9" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="iceCore" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#67e8f9"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </radialGradient>
+  </defs>
+  <!-- Многослойный газовый хвост -->
+  <path d="M84 54 L10 14 L26 42 L8 46 L70 76 Z" fill="url(#cometTail)"/>
+  <line x1="76" y1="62" x2="18" y2="26" stroke="#e0f2fe" stroke-opacity="0.65" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- Ледяное кристаллическое ядро -->
+  <polygon points="82,42 98,54 96,74 78,84 62,72 64,52" fill="url(#iceCore)" stroke="#e0f2fe" stroke-width="2"/>
+  <polygon points="80,50 90,58 84,72 72,66" fill="#ffffff" fill-opacity="0.75"/>
+  <circle cx="48" cy="34" r="2.5" fill="#bae6fd"/>
+  <circle cx="34" cy="48" r="2" fill="#e0f2fe"/>
+</svg>

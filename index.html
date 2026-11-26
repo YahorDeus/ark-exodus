@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARK EXODUS — Пошаговый симулятор корабля-ковчега</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- СТАРТОВЫЙ ЭКРАН -->
+  <div id="screen-title" class="overlay">
+    <div class="title-card">
+      <div class="title-hero-art">
+        <img src="assets/svg/ark_hull.svg" alt="Ковчег EXODUS-0" />
+      </div>
+      <div class="eyebrow">TURN-BASED CRISIS SURVIVAL · EXODUS-0</div>
+      <h1>ARK EXODUS</h1>
+      <p class="subtitle">Земля уничтожена. Огромный корабль-станция <strong>EXODUS-0</strong> несёт 1 000 колонистов к Новой Галактике. Преобразуй Энергию в ресурсы, спасай потерянный экипаж и захватывай малые звёзды в Реактор.</p>
+
+      <div class="brief-grid">
+        <div class="brief-item">
+          <span>01</span>
+          <div>
+            <strong>Живой разрез Ковчега и Энергия → Ресурсы</strong>
+            <p>Каждый +1 человек в отсеке тратит энергию (МВт) и производит Еду, O₂, Сплавы, Щиты и Оружие за ход.</p>
+          </div>
+        </div>
+        <div class="brief-item">
+          <span>02</span>
+          <div>
+            <strong>3D-карта Галактики и экспедиции (3–5 ходов)</strong>
+            <p>Отдаляй камеру от корабля в систему и галактику, выбирай маршрут и отправляй шаттлы к туманностям, кометам и капсулам выживших.</p>
+          </div>
+        </div>
+        <div class="brief-item">
+          <span>03</span>
+          <div>
+            <strong>Захват Звёзд и 10-ходовые угрозы</strong>
+            <p>Захватывай карликовые звёзды в Реактор под атаками комет и готовь Щит с Оружием к встрече Космического десанта.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-actions">
+        <button id="btn-new-game" class="btn btn-primary btn-lg">НАЧАТЬ ЭКСПЕДИЦИЮ</button>
+        <button id="btn-continue" class="btn btn-ghost btn-lg hidden">ПРОДОЛЖИТЬ</button>
+      </div>
+      <div class="title-hint">Клавиши: <kbd>1</kbd> Корабль · <kbd>2</kbd> Система · <kbd>3</kbd> Галактика · <kbd>Space</kbd> / <kbd>Enter</kbd> Завершить ход</div>
+    </div>
+  </div>
+
+  <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
+  <div id="app" class="app hidden">
+    <!-- ВЕРХНЯЯ ПРИБОРНАЯ ПАНЕЛЬ С ЕДИНЫМИ SVG-ИКОНКАМИ ВСЕХ РЕСУРСОВ -->
+    <header class="top-resources">
+      <div class="res-pill" id="pill-hull" title="Прочность обшивки корабля">
+        <div class="res-head">
+          <svg class="res-ico" viewBox="0 0 20 20" fill="none"><path d="M10 2L17 5.5V10.5C17 14.4 13.8 17.2 10 18.5C6.2 17.2 3 14.4 3 10.5V5.5L10 2Z" stroke="#94a3b8" stroke-width="1.6" fill="rgba(148,163,184,0.16)"/><path d="M7 10H13M10 7V13" stroke="#e2e8f0" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span class="res-lbl">ОБШИВКА</span>
+        </div>
+        <strong id="val-hull">100 / 100</strong>
+        <small id="rate-hull">0 / ход</small>
+      </div>
+
+      <div class="res-pill" id="pill-defense" title="Накопленный заряд Щита и боезапас Оружия">
+        <div class="res-head">
+          <svg class="res-ico" viewBox="0 0 20 20" fill="none"><path d="M10 2.5L16 5V10C16 13.4 13.4 16.2 10 17.5C6.6 16.2 4 13.4 4 10V5L10 2.5Z" stroke="#38bdf8" stroke-width="1.5" fill="rgba(56,189,248,0.15)"/><path d="M10 6V14M6.5 10H13.5" stroke="#fb923c" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span class="res-lbl">ЩИТ / ОР</span>
+        </div>
+        <strong><span id="val-shield" style="color:var(--cyan)">4</span> <span class="muted">/</span> <span id="val-weapon" style="color:#fb923c">4</span></strong>
+        <small id="rate-defense">+0Щ / +0Ор</small>
+      </div>
+
+      <div class="res-pill" id="pill-power" title="Генерация / потребление Энергии (МВт)">
+        <div class="res-head">
+          <svg class="res-ico" viewBox="0 0 20 20" fill="none"><path d="M11.5 2L4.5 11H10L8.5 18L15.5 9H10L11.5 2Z" fill="#fbbf24" stroke="#fef08a" stroke-width="1.1" stroke-linejoin="round"/></svg>
+          <span class="res-lbl">ЭНЕРГИЯ</span>
+        </div>
+        <strong id="val-power">16 / 9 МВт</strong>
+        <small id="rate-power">ЗАПАС +7</small>
+      </div>
+
+      <div class="res-pill" id="pill-o2" title="Запас кислорода O₂ на борту">
+        <div class="res-head">
+          <svg class="res-ico" viewBox="0 0 20 20" fill="none"><circle cx="7.5" cy="11" r="4.2" stroke="#38bdf8" stroke-width="1.6" fill="rgba(56,189,248,0.18)"/><circle cx="13.5" cy="8" r="3.2" stroke="#67e8f9" stroke-width="1.5" fill="rgba(103,232,249,0.2)"/></svg>
+          <span class="res-lbl">КИСЛОРОД</span>
+        </div>
+        <strong id="val-o2">50 / 130</strong>
+        <small id="rate-o2">−1 / ход</small>
+      </div>
+
+      <div class="res-pill" id="pill-fuel" title="Гелий-3: питание реактора, прыжок и смена маршрута">
+        <div class="res-head">
+          <svg class="res-ico" viewBox="0 0 20 20" fill="none"><ellipse cx="10" cy="10" rx="7.5" ry="3.2" transform="rotate(35 10 10)" stroke="#fbbf24" stroke-width="1.4"/><ellipse cx="10" cy="10" rx="7.5" ry="3.2" transform="rotate(-35 10 10)" stroke="#f59e0b" stroke-width="1.4"/><circle cx="10" cy="10" r="2.5" fill="#fef08a"/></svg>
+          <span class="res-lbl">ГЕЛИЙ-3</span>
+        </div>
+        <strong id="val-fuel">24 / 27</strong>
+        <small id="rate-fuel">−2 / ход</small>
+      </div>
+
+      <div class="res-pill" title="Сплавы и редкие Компоненты">
+        <div class="res-head">
+          <svg class="res-ico" viewBox="0 0 20 20" fill="none"><polygon points="10,2.5 16.5,6.2 16.5,13.8 10,17.5 3.5,13.8 3.5,6.2" stroke="#fb923c" stroke-width="1.5" fill="rgba(251,146,60,0.18)"/><circle cx="10" cy="10" r="2.6" fill="#c084fc"/></svg>
+          <span class="res-lbl">СПЛАВЫ</span>
+        </div>
+        <strong><span id="val-alloys">32</span> <span class="muted">/</span> <span id="val-comp" class="txt-purple">1</span></strong>
+        <small id="rate-alloys">0 / ход</small>
+      </div>
+
+      <div class="res-pill" id="pill-food" title="Запас еды из Огородов">
+        <div class="res-head">
+          <svg class="res-ico" viewBox="0 0 20 20" fill="none"><path d="M10 17V8" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round"/><path d="M10 11C6 10.5 4 7.5 5 4C8.5 4 10.5 6.8 10 11Z" fill="#4ade80"/><path d="M10 10C13.5 9.5 15.8 7 15 3.8C11.8 4 10 6.5 10 10Z" fill="#86efac"/></svg>
+          <span class="res-lbl">ЕДА (ПАЙКИ)</span>
+        </div>
+        <strong id="val-food">44 / 130</strong>
+        <small id="rate-food">−7 / ход</small>
+      </div>
+
+      <div class="res-pill" title="Свободные / Активный экипаж · Криокапсулы">
+        <div class="res-head">
+          <svg class="res-ico" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6.2" r="3" stroke="#fbbf24" stroke-width="1.6" fill="rgba(251,191,36,0.2)"/><path d="M4.5 17C4.8 13.3 7.2 11.4 10 11.4C12.8 11.4 15.2 13.3 15.5 17" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span class="res-lbl">ЭКИПАЖ</span>
+        </div>
+        <strong><span id="val-crew-free" class="txt-gold">2</span> своб. · <span id="val-crew-total">8</span></strong>
+        <small id="val-cryo">Крио: 1000</small>
+      </div>
+
+      <div class="res-pill" id="pill-morale" title="Мораль экипажа (при 0% — бунт)">
+        <div class="res-head">
+          <svg class="res-ico" viewBox="0 0 20 20" fill="none"><path d="M10 17L4.2 11.5C2.5 9.8 2.6 6.8 4.6 5.2C6.3 3.9 8.6 4.4 10 6.1C11.4 4.4 13.7 3.9 15.4 5.2C17.4 6.8 17.5 9.8 15.8 11.5L10 17Z" stroke="#f472b6" stroke-width="1.5" fill="rgba(244,114,182,0.2)"/></svg>
+          <span class="res-lbl">МОРАЛЬ</span>
+        </div>
+        <strong id="val-morale">76%</strong>
+        <small id="rate-morale">0 / ход</small>
+      </div>
+    </header>
+
+    <!-- ПАНЕЛЬ МАСШТАБА (ЗУМ-ВКЛАДКИ) И КНОПКА ХОДА -->
+    <div class="control-bar">
+      <div class="view-switch">
+        <button id="tab-ship" class="tab-btn active">
+          <svg class="tab-ico" viewBox="0 0 18 18" fill="none"><path d="M2 9L5 5H13L16 9L13 13H5L2 9Z" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="9" r="2" fill="currentColor"/></svg>
+          1. КОРАБЛЬ
+        </button>
+        <button id="tab-system" class="tab-btn">
+          <svg class="tab-ico" viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="9" rx="7" ry="4" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9" r="2.2" fill="currentColor"/><circle cx="14.5" cy="7.5" r="1.4" fill="#4ade80"/></svg>
+          2. СИСТЕМА
+        </button>
+        <button id="tab-galaxy" class="tab-btn">
+          <svg class="tab-ico" viewBox="0 0 18 18" fill="none"><circle cx="4" cy="9" r="1.8" fill="currentColor"/><circle cx="9.5" cy="5" r="1.8" fill="#fbbf24"/><circle cx="14" cy="12" r="1.8" fill="currentColor"/><path d="M5.6 8L8 6M11 6.2L13 10.4" stroke="currentColor" stroke-width="1.3"/></svg>
+          3. ГАЛАКТИКА
+        </button>
+      </div>
+
+      <div class="sector-banner">
+        <strong id="bar-system-name">Сектор 0 · Окраина Солнца</strong>
+        <span id="bar-turn" class="hazard-tag">Ход 1</span>
+        <span id="bar-storm" class="storm-tag">Шторм через 14 ход.</span>
+      </div>
+
+      <div class="time-controls">
+        <button id="btn-music" class="btn btn-sm btn-ghost active-spd">Музыка: ВКЛ</button>
+        <button id="btn-sound" class="btn btn-sm btn-ghost">SFX: ВКЛ</button>
+        <button id="btn-restart" class="btn btn-sm btn-danger-ghost">Заново</button>
+        <button id="btn-end-turn" class="btn btn-turn">ЗАВЕРШИТЬ ХОД →</button>
+      </div>
+    </div>
+
+    <!-- РАБОЧАЯ ОБЛАСТЬ -->
+    <div class="workspace">
+      <div class="stage-col">
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="ark-canvas"></canvas>
+          <div class="zoom-breadcrumb" id="zoom-breadcrumb">МАСШТАБ: РАЗРЕЗ КОВЧЕГА · Клик по отсеку для управления</div>
+        </div>
+
+        <div class="bottom-strip">
+          <div class="strip-shuttles">
+            <div class="strip-title">АКТИВНЫЕ ЭКСПЕДИЦИИ (ПО ХОДАМ)</div>
+            <div id="strip-shuttle-list" class="strip-shuttle-list"></div>
+          </div>
+          <div class="strip-logs">
+            <div class="strip-title">БОРТОВОЙ ЖУРНАЛ</div>
+            <div id="log-list" class="log-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ПРАВАЯ ПАНЕЛЬ -->
+      <aside class="sidebar">
+        <!-- БАННЕР ПРИБЛИЖАЮЩЕЙСЯ УГРОЗЫ (10-ХОДОВОЙ ОТСЧЁТ) -->
+        <section id="threat-card" class="card threat-card hidden">
+          <div class="card-head">
+            <span class="tag tag-red">⚠ ЗАСЕЧЕНА УГРОЗА</span>
+            <span id="th-countdown" class="lvl-badge" style="color:#fecaca;">Через 10 ход.</span>
+          </div>
+          <img id="th-art" class="threat-art" src="assets/svg/threat_marines.svg" alt="Угроза" />
+          <h3 id="th-name">Космический десант</h3>
+          <div id="th-reqs" class="sc-tactics"></div>
+          <button id="btn-reroute-threat" class="btn btn-danger-ghost btn-full">СМЕНИТЬ МАРШРУТ (−18 He-3 → +5 ход.)</button>
+        </section>
+
+        <!-- БАННЕР ЗАХВАТА ЗВЕЗДЫ -->
+        <section id="star-capture-card" class="card star-card hidden">
+          <div class="card-head">
+            <span class="tag tag-gold">⭐ ЗАХВАТ ЗВЕЗДЫ В РЕАКТОР</span>
+            <span id="sc-progress" class="lvl-badge">0 / 4 ходов</span>
+          </div>
+          <h3 id="sc-name">Красный карлик K-14</h3>
+          <p id="sc-desc" class="card-desc"></p>
+          <div id="sc-tactics" class="sc-tactics"></div>
+          <button id="btn-toggle-capture" class="btn btn-turn btn-full">НАЧАТЬ ЗАХВАТ ЗВЕЗДЫ</button>
+        </section>
+
+        <!-- ПАНЕЛЬ 1: КОРАБЛЬ -->
+        <div id="side-ship-panel" class="side-stack">
+          <section class="card">
+            <div class="card-head">
+              <span id="ci-tag" class="tag">ОТСЕК</span>
+              <span id="ci-level" class="lvl-badge">Ур. 1 / 3</span>
+            </div>
+            <div class="insp-title-row">
+              <img id="ci-icon" class="insp-svg-icon" src="assets/svg/comp_reactor.svg" alt="" />
+              <h2 id="ci-name">Звёздный реактор</h2>
+            </div>
+            <p id="ci-desc" class="card-desc"></p>
+            <div id="ci-formula" class="formula-box"></div>
+
+            <div class="ctrl-row">
+              <div>
+                <div class="ctrl-label">Экипаж в отсеке</div>
+                <div class="ctrl-sub" id="ci-workers-sub">2 / 2 (свободно: 2)</div>
+              </div>
+              <div class="stepper">
+                <button id="btn-w-minus" class="btn btn-sm btn-ghost">−</button>
+                <span id="ci-workers-num">2</span>
+                <button id="btn-w-plus" class="btn btn-sm btn-ghost">+</button>
+              </div>
+            </div>
+
+            <div class="upgrade-box">
+              <div class="ctrl-label" id="ci-upg-title">Модернизация → Ур. 2</div>
+              <p class="ctrl-sub" id="ci-upg-note"></p>
+              <div class="upg-cost" id="ci-upg-cost"></div>
+              <button id="btn-upgrade-comp" class="btn btn-primary btn-full">МОДЕРНИЗИРОВАТЬ</button>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <span class="tag">КРИОСЕКЦИЯ И УКАЗЫ</span>
+              <span id="cryo-status-tag" class="lvl-badge">1000 капсул</span>
+            </div>
+            <div class="ctrl-row" style="border-top:none;padding-top:2px;">
+              <div>
+                <div class="ctrl-label">Питание Криосекции</div>
+                <div class="ctrl-sub">3 МВт/ход · при выкл. −35 крио/ход</div>
+              </div>
+              <button id="btn-cryo-power" class="btn btn-sm btn-ghost active-spd">ВКЛ (3 МВт)</button>
+            </div>
+            <div class="policy-list mt-8">
+              <label class="policy-row">
+                <input type="checkbox" id="pol-overtime" />
+                <div>
+                  <strong>Авральные смены</strong>
+                  <small>+30% синтеза ресурсов · −3 Морали/ход</small>
+                </div>
+              </label>
+              <label class="policy-row">
+                <input type="checkbox" id="pol-rationing" />
+                <div>
+                  <strong>Урезанный паёк</strong>
+                  <small>−35% расхода Еды · −2 Морали/ход</small>
+                </div>
+              </label>
+              <label class="policy-row">
+                <input type="checkbox" id="pol-overcharge" />
+                <div>
+                  <strong>Форсаж реактора</strong>
+                  <small>+5 МВт · +2 He-3 и −3 обш/ход</small>
+                </div>
+              </label>
+            </div>
+            <button id="btn-wake-cryo" class="btn btn-ghost btn-full mt-8">Пробудить +2 чел. из Крио (−15 крио)</button>
+          </section>
+        </div>
+
+        <!-- ПАНЕЛЬ 2: СИСТЕМА (ВЫЛАЗКИ) -->
+        <div id="side-system-panel" class="side-stack hidden">
+          <section class="card">
+            <div class="card-head">
+              <span id="ni-type" class="tag">ОБЪЕКТ СИСТЕМЫ</span>
+              <span id="ni-risk" class="lvl-badge">Риск ЧП: 25%</span>
+            </div>
+            <div class="insp-title-row">
+              <img id="ni-icon" class="insp-svg-icon" src="assets/svg/node_nebula.svg" alt="" />
+              <h2 id="ni-name">Выбери объект</h2>
+            </div>
+            <p id="ni-desc" class="card-desc"></p>
+            <div id="ni-yields" class="yield-chips"></div>
+
+            <div class="ctrl-row">
+              <div>
+                <div class="ctrl-label">Команда шаттла</div>
+                <div class="ctrl-sub" id="ni-free-crew">Свободно: 2 чел.</div>
+              </div>
+              <div class="seg-group" id="seg-crew">
+                <button data-val="1" class="seg-btn">1</button>
+                <button data-val="2" class="seg-btn active">2</button>
+                <button data-val="3" class="seg-btn">3</button>
+              </div>
+            </div>
+
+            <div class="ctrl-row">
+              <div>
+                <div class="ctrl-label">Режим вылазки</div>
+                <div class="ctrl-sub" id="ni-mode-desc"></div>
+              </div>
+            </div>
+            <div class="seg-group seg-full" id="seg-mode">
+              <button data-val="safe" class="seg-btn">Осторожно</button>
+              <button data-val="standard" class="seg-btn active">Стандарт</button>
+              <button data-val="overdrive" class="seg-btn">Форсаж</button>
+            </div>
+
+            <button id="btn-launch-shuttle" class="btn btn-primary btn-full mt-10">ОТПРАВИТЬ ЭКСПЕДИЦИЮ</button>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <span class="tag">ОБЪЕКТЫ В СИСТЕМЕ</span>
+              <span id="si-shuttles-cap" class="lvl-badge">Шаттлы: 0/1</span>
+            </div>
+            <div id="node-list" class="node-list"></div>
+          </section>
+        </div>
+
+        <!-- ПАНЕЛЬ 3: КАРТА ГАЛАКТИКИ -->
+        <div id="side-galaxy-panel" class="side-stack hidden">
+          <section class="card">
+            <div class="card-head">
+              <span id="gi-layer" class="tag">РАЗВЕДКА СИСТЕМЫ</span>
+              <span id="gi-threat" class="lvl-badge">Угроза: 2/5</span>
+            </div>
+            <h2 id="gi-name">Выбери звёздную систему</h2>
+            <p id="gi-scan" class="card-desc"></p>
+            <div id="gi-meta" class="yield-chips"></div>
+            <div id="gi-jump-hint" class="ctrl-sub" style="margin-bottom:10px;"></div>
+            <button id="btn-galaxy-jump" class="btn btn-turn btn-full" disabled>ГИПЕРПРЫЖОК В СИСТЕМУ</button>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <span class="tag">ДОСТУПНЫЕ ПЕРЕХОДЫ</span>
+              <span id="gi-fuel-cost" class="lvl-badge">Цена: 27 He-3</span>
+            </div>
+            <div id="galaxy-next-list" class="node-list"></div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА ЧП / ДИЛЕММЫ / КОНЦОВКИ -->
+  <div id="modal-event" class="overlay hidden">
+    <div class="event-card">
+      <div id="ev-badge" class="ev-badge">СОБЫТИЕ</div>
+      <img id="ev-art" class="event-art hidden" src="" alt="" />
+      <h2 id="ev-title">Заголовок</h2>
+      <p id="ev-desc" class="ev-desc"></p>
+      <div id="ev-stats" class="ev-stats hidden"></div>
+      <div id="ev-choices" class="ev-choices"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

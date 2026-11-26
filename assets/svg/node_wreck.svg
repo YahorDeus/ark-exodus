@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 110" fill="none">
+  <!-- Расколотый древний корабль / обломки -->
+  <g transform="rotate(-18 55 55)">
+    <!-- Левая часть корпуса -->
+    <path d="M16 40 L52 34 L48 52 L54 68 L20 72 L12 56 Z" fill="#334155" stroke="#fbbf24" stroke-width="2"/>
+    <!-- Оторванная носовая секция -->
+    <path d="M62 38 L94 46 L98 58 L64 68 L58 54 Z" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+    <!-- Повреждённая солнечная панель -->
+    <rect x="26" y="16" width="18" height="18" fill="#0f2942" stroke="#38bdf8" stroke-width="1.5"/>
+    <line x1="35" y1="16" x2="35" y2="34" stroke="#38bdf8" stroke-opacity="0.6"/>
+    <rect x="68" y="72" width="16" height="14" fill="#0f2942" stroke="#38bdf8" stroke-width="1.4" transform="rotate(14 76 79)"/>
+    <!-- Искры в разломе -->
+    <path d="M51 44 L59 48 L53 55 L60 60" stroke="#fde047" stroke-width="2" stroke-linecap="round"/>
+    <!-- Маяк SOS -->
+    <circle cx="30" cy="52" r="5" fill="#ef4444"/>
+    <circle cx="30" cy="52" r="9.5" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1.6"/>
+  </g>
+</svg>

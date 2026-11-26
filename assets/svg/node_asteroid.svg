@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 110" fill="none">
+  <defs>
+    <linearGradient id="rock" x1="15" y1="15" x2="90" y2="95" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="50%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <!-- Основная форма астероида -->
+  <path d="M36 18 L68 14 L92 36 L95 66 L74 92 L40 94 L18 74 L16 42 Z"
+        fill="url(#rock)" stroke="#cbd5e1" stroke-width="2.2" stroke-linejoin="round"/>
+  <!-- Грани и тени -->
+  <path d="M36 18 L52 44 L92 36 M52 44 L40 94 M52 44 L74 92" stroke="#0f172a" stroke-opacity="0.45" stroke-width="1.8"/>
+  <!-- Светящиеся рудные жилы сплавов -->
+  <path d="M28 54 L46 48 L56 62 M64 34 L76 48 L70 64" stroke="#fb923c" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 54 L46 48" stroke="#fde68a" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- Кратеры -->
+  <circle cx="38" cy="34" r="6.5" fill="#1e293b" stroke="#64748b" stroke-width="1.4"/>
+  <circle cx="68" cy="70" r="8" fill="#1e293b" stroke="#64748b" stroke-width="1.4"/>
+  <circle cx="76" cy="30" r="4" fill="#1e293b"/>
+</svg>
